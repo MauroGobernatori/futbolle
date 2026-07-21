@@ -1,16 +1,52 @@
+var section_nombre_repetido = document.getElementById("nombre_repetido");
+var tablero = document.getElementById("tablero");
+var nombres_usados = [];
+var intentos_restantes = 8;
+
+function actualizar_intentos_restantes(intentos_restantes){
+  var intentos = document.getElementById("intentos");
+  intentos.innerText = intentos_restantes;
+}
+
+actualizar_intentos_restantes(intentos_restantes);
+
+var boton_reiniciar = document.getElementById("boton_reiniciar");
+boton_reiniciar.addEventListener("click", function (evento){
+  reiniciar();
+});
+
+async function generar_jugador(){
+  var jugador = await fetch("https://futbolle-daw-uai-2026.onrender.com/api/players/random")
+    .then(response => response.json())
+    .then(function(data){
+      // console.log(data)
+
+      input_busqueda.disabled = false;
+      return data;
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+
+  return jugador;
+}
+
+var jugador_random;
+
+async function iniciar(){
+  jugador_random = await generar_jugador();
+  input_busqueda.disabled = false;
+  // console.log(jugador_random);
+}
+
+iniciar();
+
 var lista_autocompletado = document.getElementById("lista_autocompletado");
 var input_busqueda = document.getElementById("input_busqueda");
 
-var jugador_random = 
-fetch("https://futbolle-daw-uai-2026.onrender.com/api/players/random")
-  .then(response => response.json())
-  .then(function(data){
-    // console.log(data)
-    input_busqueda.disabled = false;
-  })
-  .catch(function(err){
-    console.log(err);
-  });
+input_busqueda.addEventListener("focus", function(){
+  section_nombre_repetido.classList.add("oculto");
+});
 
 input_busqueda.addEventListener("input", function(evento){
     var largo_texto = evento.target.value.length;
@@ -23,36 +59,80 @@ input_busqueda.addEventListener("input", function(evento){
 
 function autocompletado(nombre){
   var jugadores =
-fetch("https://futbolle-daw-uai-2026.onrender.com/api/players/search?q="+nombre+"&limit=8")
-  .then(response => response.json())
-  .then(function(data){
-    // console.log(data)
+  fetch("https://futbolle-daw-uai-2026.onrender.com/api/players/search?q="+nombre+"&limit=8")
+    .then(response => response.json())
+    .then(function(data){
+      // console.log(data)
+      lista_autocompletado.innerHTML = "";
 
-    lista_autocompletado.innerHTML = "";
-
-    for(i=0; i< data.length; i++){
+      for(i=0; i< data.length; i++){
 
         var li_autocompletado = document.createElement("li");
 
         li_autocompletado.textContent = data[i].name;
+         li_autocompletado.jugador = data[i];
         li_autocompletado.addEventListener("click", function(evento){
-            intento_jugador(evento.target.textContent);
+            intento_jugador(evento.target.jugador);
         });
 
         lista_autocompletado.appendChild(li_autocompletado);
+      }
+      
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+}
 
+function intento_jugador(jugador){
+
+  for(i=0;i<nombres_usados.length;i++){
+    if(jugador.name === nombres_usados[i]){
+      nombre_repetido();
+      return;
     }
+  }
+
+  nombres_usados.push(jugador.name);
     
-  })
-  .catch(function(err){
-    console.log(err);
+  input_busqueda.value = "";
+  lista_autocompletado.innerHTML = "";
+
+  armar_fila(jugador.nationality, jugador.club, jugador.position, jugador.age, jugador.overall, jugador.heightCm);
+
+  intentos_restantes--;
+  actualizar_intentos_restantes(intentos_restantes);
+}
+
+function armar_fila(nacionalidad, club, posicion, edad, overall, altura){
+  var datos = [nacionalidad, club, posicion, edad, overall, altura];
+
+  var fila = document.createElement("tr");
+  fila.classList.add("fila");
+  datos.forEach(celda => {
+    var columna_td = document.createElement("td");
+    columna_td.classList.add("celda");
+    columna_td.textContent = celda;
+    fila.appendChild(columna_td);
   });
 
+  tablero.appendChild(fila);
 }
 
-function intento_jugador(nombre){
-    
-    // input_busqueda.value = nombre;
-    // autocompletado(nombre);
-
+function borrar_tablero(){
+  tablero.innerHTML = "";
 }
+
+function reiniciar(){
+  iniciar();
+  intentos_restantes = 8;
+  actualizar_intentos_restantes(intentos_restantes);
+  borrar_tablero();
+}
+
+function nombre_repetido(){
+  input_busqueda.value = "";
+  lista_autocompletado.innerHTML = "";
+  section_nombre_repetido.classList.remove("oculto");
+}
+

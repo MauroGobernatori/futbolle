@@ -61,6 +61,12 @@ body {
   background-color: #334155;
 }
 
+.nombre_repetido {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .info_juego {
   display: flex;
   justify-content: space-between;
@@ -102,4 +108,8 @@ body {
   color: white;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.oculto{
+  display: none;
 }
