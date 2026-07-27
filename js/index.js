@@ -36,7 +36,7 @@ var jugador_random;
 async function iniciar(){
   jugador_random = await generar_jugador();
   input_busqueda.disabled = false;
-  // console.log(jugador_random);
+  console.log(jugador_random);
 }
 
 iniciar();
@@ -86,6 +86,8 @@ function autocompletado(nombre){
 
 function intento_jugador(jugador){
 
+  iniciarCronometro();
+
   for(i=0;i<nombres_usados.length;i++){
     if(jugador.name === nombres_usados[i]){
       nombre_repetido();
@@ -98,11 +100,23 @@ function intento_jugador(jugador){
   input_busqueda.value = "";
   lista_autocompletado.innerHTML = "";
 
+  cantidad_correctos = 0;
   armar_fila(jugador.nationality, jugador.club, jugador.position, jugador.age, jugador.overall, jugador.heightCm);
 
+  
   intentos_restantes--;
   actualizar_intentos_restantes(intentos_restantes);
+  if(cantidad_correctos === 6){
+    victoria();
+    return;
+  }
+
+  if(intentos_restantes === 0){
+    derrota();
+  }
 }
+
+var cantidad_correctos = 0;
 
 function armar_fila(nacionalidad, club, posicion, edad, overall, altura){
   var datos = [nacionalidad, club, posicion, edad, overall, altura];
@@ -118,6 +132,7 @@ function armar_fila(nacionalidad, club, posicion, edad, overall, altura){
     
     if(datos[i] === datos_jugador_random[i]){
       columna_td.classList.add("correcto");
+      cantidad_correctos++;
     }else{
       columna_td.classList.add("incorrecto");
       if(typeof datos[i] === "number"){
@@ -146,6 +161,7 @@ function reiniciar(){
   actualizar_intentos_restantes(intentos_restantes);
   borrar_tablero();
   nombres_usados = [];
+  reiniciarCronometro();
 }
 
 function nombre_repetido(){
@@ -155,9 +171,84 @@ function nombre_repetido(){
 }
 
 function derrota(){
+  input_busqueda.disabled = true;
+  
+  mostrarModalPerdiste(jugador_random);
+  detenerCronometro();
+}
 
+var modal_derrota = document.getElementById("modal_perdiste");
+var contenedor_jugador = document.getElementById("jugador_secreto");
+var boton_cerrar_modal_derrota = document.getElementById("btn_cerrar_modal_derrota");
+
+boton_cerrar_modal_derrota.addEventListener("click", function(){
+  modal_derrota.classList.add("modal_oculto");
+});
+
+function mostrarModalPerdiste(jugador){
+  
+  contenedor_jugador.innerHTML =
+    "<p><strong>Nombre:</strong> " + jugador.name + "</p>" +
+    "<p><strong>Nacionalidad:</strong> " + jugador.nationality + "</p>" +
+    "<p><strong>Club:</strong> " + jugador.club + "</p>" +
+    "<p><strong>Posición:</strong> " + jugador.position + "</p>" +
+    "<p><strong>Edad:</strong> " + jugador.age + "</p>" +
+    "<p><strong>Overall:</strong> " + jugador.overall + "</p>" +
+    "<p><strong>Altura:</strong> " + jugador.heightCm + " cm</p>";
+
+  modal_derrota.classList.remove("modal_oculto");
 }
 
 function victoria(){
+  input_busqueda.disabled = true;
 
+  mostrarVictoria(tiempo_texto.textContent, 8 - intentos_restantes);
+  detenerCronometro();
+}
+
+var modal_victoria = document.getElementById("modal_victoria");
+
+var tiempo_span = document.getElementById("tiempo_final");
+var intentos_span = document.getElementById("intentos_usados");
+
+function mostrarVictoria(tiempo, intentos) {
+  tiempo_span.textContent = tiempo;
+  intentos_span.textContent = intentos;
+
+  modal_victoria.classList.remove("modal_oculto");
+}
+
+var boton_cerrar_modal_victoria = document.getElementById("btn_cerrar_modal_victoria");
+boton_cerrar_modal_victoria.addEventListener("click", function(){
+  modal_victoria.classList.add("modal_oculto");
+});
+
+var tiempo = 0;
+var intervalo = null;
+var cronometro_iniciado = false;
+var tiempo_texto = document.getElementById("tiempo");
+
+function iniciarCronometro() {
+    if (!cronometro_iniciado) {
+        cronometro_iniciado = true;
+
+        intervalo = setInterval(function () {
+            tiempo++;
+            tiempo_texto.innerHTML = "Tiempo: " + tiempo + "s";
+        }, 1000);
+    }
+}
+
+function detenerCronometro() {
+    if (intervalo !== null) {
+        clearInterval(intervalo);
+        intervalo = null;
+    }
+}
+
+function reiniciarCronometro() {
+    detenerCronometro();
+    tiempo = 0;
+    cronometro_iniciado = false;
+    tiempo_texto.innerHTML = "Tiempo: 0s";
 }

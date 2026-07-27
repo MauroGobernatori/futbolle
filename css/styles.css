@@ -151,3 +151,84 @@ body {
 .flecha.abajo {
     color: #ffd1d1;
 }
+
+#modal_perdiste.modal_oculto, #modal_victoria.modal_oculto{
+  display: none;
+}
+
+#modal_perdiste, #modal_victoria {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+.modal_contenido {
+    background: #0f172a;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 350px;
+
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.modal_contenido h2 {
+    color: #ef4444;
+    margin-bottom: 10px;
+}
+
+.texto_modal {
+    color: #cbd5f5;
+    margin-bottom: 15px;
+}
+
+.datos_jugador {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 14px;
+}
+
+#btn_cerrar_modal_derrota, #btn_cerrar_modal_victoria {
+    background: #3b82f6;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+#btn_cerrar_modal_derrota:hover, #btn_cerrar_modal_victoria:hover {
+    background: #2563eb;
+}
+
+.titulo_victoria {
+  color: #22c55e; /* verde */
+  margin-bottom: 10px;
+}
+
+.texto_victoria {
+  margin-bottom: 15px;
+}
+
+.info_victoria {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.info_victoria span {
+  font-weight: bold;
+  color: #60a5fa;
+}

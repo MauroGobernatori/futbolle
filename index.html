@@ -26,7 +26,7 @@
 
         <section class="info_juego">
             <p>Intentos restantes: <span id="intentos"></span></p>
-            <p>Tiempo: <span id="tiempo">0s</span></p>
+            <p><span id="tiempo">Tiempo: 0s</span></p>
         </section>
 
         <section>
@@ -41,6 +41,37 @@
         </a>
 
     </main>
+
+    <div id="modal_perdiste" class="modal_oculto">
+        <div class="modal_contenido">
+            <h2>¡Perdiste!</h2>
+            
+            <p class="texto_modal">El jugador secreto era:</p>
+
+            <div id="jugador_secreto" class="datos_jugador">
+                
+            </div>
+
+            <button id="btn_cerrar_modal_derrota">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="modal_victoria" class="modal_oculto">
+        <div class="modal_contenido">
+            <h2 class="titulo_victoria">¡Ganaste!</h2>
+            
+            <p class="texto_victoria">
+            Descubriste el jugador correctamente
+            </p>
+
+            <div class="info_victoria">
+            <p><strong>Tiempo:</strong> <span id="tiempo_final"></span></p>
+            <p><strong>Intentos usados:</strong> <span id="intentos_usados"></span></p>
+            </div>
+
+            <button id="btn_cerrar_modal_victoria">Cerrar</button>
+        </div>
+    </div>
 
     <script src="./js/index.js"></script>
 </body>
