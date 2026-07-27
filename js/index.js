@@ -36,7 +36,7 @@ var jugador_random;
 async function iniciar(){
   jugador_random = await generar_jugador();
   input_busqueda.disabled = false;
-  console.log(jugador_random);
+  // console.log(jugador_random);
 }
 
 iniciar();
@@ -115,10 +115,19 @@ function armar_fila(nacionalidad, club, posicion, edad, overall, altura){
     var columna_td = document.createElement("td");
     columna_td.classList.add("celda");
     columna_td.textContent = datos[i];
+    
     if(datos[i] === datos_jugador_random[i]){
       columna_td.classList.add("correcto");
     }else{
       columna_td.classList.add("incorrecto");
+      if(typeof datos[i] === "number"){
+        if(datos[i] > datos_jugador_random[i]){
+          columna_td.innerHTML += "<span class='flecha abajo'>↓</span>";
+        }else{
+          columna_td.innerHTML += "<span class='flecha arriba'>↑</span>"
+        }
+        
+      }
     }
 
     fila.appendChild(columna_td);

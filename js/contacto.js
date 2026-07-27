@@ -32,7 +32,7 @@ form.addEventListener("submit", function(e) {
         return;
     }
 
-    window.location.href = `mailto:tuemail@gmail.com?subject=${asunto}&body=${mensaje}`;
+    window.location.href = `mailto:ejemplo@example.com?subject=${asunto}&body=${mensaje}`;
 });
 
 function mostrarModal(mensaje) {
