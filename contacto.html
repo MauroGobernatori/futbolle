@@ -17,15 +17,15 @@
         Si tenés alguna consulta o sugerencia, completá el formulario.
       </p>
 
-      <form class="formulario-contacto" action="mailto:ejemplo@example.com" method="post" enctype="text/plain">
+      <form class="formulario-contacto" action="mailto:ejemplo@example.com" method="post" enctype="text/plain" id="form-contacto">
         <div class="grupo">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" required>
         </div>
 
         <div class="grupo">
-          <label for="email">Email</label>
-          <input type="email" id="email" required>
+          <label for="text">Email</label>
+          <input type="text" id="email" required>
         </div>
 
         <div class="grupo">
@@ -49,6 +49,15 @@
 
     </section>
   </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-contenido">
+            <p id="modal-mensaje"></p>
+            <button onclick="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+
+  <script src="./js/contacto.js"></script>
 
 </body>
 </html>
