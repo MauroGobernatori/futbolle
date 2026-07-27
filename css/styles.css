@@ -113,3 +113,22 @@ body {
 .oculto{
   display: none;
 }
+
+.boton-link {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+
+  padding: 12px 20px;
+  border-radius: 8px;
+
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+.boton-link:hover {
+  background-color: #2563eb;
+}

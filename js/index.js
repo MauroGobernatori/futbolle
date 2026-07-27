@@ -36,7 +36,7 @@ var jugador_random;
 async function iniciar(){
   jugador_random = await generar_jugador();
   input_busqueda.disabled = false;
-  // console.log(jugador_random);
+  console.log(jugador_random);
 }
 
 iniciar();
@@ -106,15 +106,23 @@ function intento_jugador(jugador){
 
 function armar_fila(nacionalidad, club, posicion, edad, overall, altura){
   var datos = [nacionalidad, club, posicion, edad, overall, altura];
+  var datos_jugador_random = [jugador_random.nationality, jugador_random.club, jugador_random.position, jugador_random.age, jugador_random.overall, jugador_random.heightCm];
 
   var fila = document.createElement("tr");
   fila.classList.add("fila");
-  datos.forEach(celda => {
+
+  for(i=0;i<datos.length;i++){
     var columna_td = document.createElement("td");
     columna_td.classList.add("celda");
-    columna_td.textContent = celda;
+    columna_td.textContent = datos[i];
+    if(datos[i] === datos_jugador_random[i]){
+      columna_td.classList.add("correcto");
+    }else{
+      columna_td.classList.add("incorrecto");
+    }
+
     fila.appendChild(columna_td);
-  });
+  }
 
   tablero.appendChild(fila);
 }
@@ -128,6 +136,7 @@ function reiniciar(){
   intentos_restantes = 8;
   actualizar_intentos_restantes(intentos_restantes);
   borrar_tablero();
+  nombres_usados = [];
 }
 
 function nombre_repetido(){
@@ -136,3 +145,10 @@ function nombre_repetido(){
   section_nombre_repetido.classList.remove("oculto");
 }
 
+function derrota(){
+
+}
+
+function victoria(){
+
+}
