@@ -220,6 +220,45 @@ button {
   cursor: pointer;
 }
 
+.boton_historial{
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+
+  padding: 12px 20px;
+  border-radius: 8px;
+
+  background-color: var(--color-boton);
+  color: var(--color-texto);
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+.boton_historial:hover{
+  background-color: var(--color-boton-hover);
+  cursor: pointer;
+}
+
+.boton_modal_historial{
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+
+  padding: 4px 8px;
+  border-radius: 6px;
+
+  background-color: var(--color-boton);
+  color: var(--color-texto);
+
+  transition: 0.2s;
+}
+
+.boton_modal_historial:hover{
+  background-color: var(--color-boton-hover);
+  cursor: pointer;
+}
+
 .flecha {
     font-size: 14px;
     margin-left: 5px;
@@ -233,11 +272,11 @@ button {
     color: #ffd1d1;
 }
 
-#modal_perdiste.modal_oculto, #modal_victoria.modal_oculto{
+#modal_perdiste.modal_oculto, #modal_victoria.modal_oculto, #modal_historial.modal_oculto{
   display: none;
 }
 
-#modal_perdiste, #modal_victoria {
+#modal_perdiste, #modal_victoria, #modal_historial {
     position: fixed;
     top: 0;
     left: 0;
@@ -312,4 +351,18 @@ button {
 .info_victoria span {
   font-weight: bold;
   color: #60a5fa;
+}
+
+#lista_historial {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.item_historial {
+  border-bottom: 1px solid var(--color-borde);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

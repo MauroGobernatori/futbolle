@@ -102,18 +102,35 @@ function intento_jugador(jugador){
 
   cantidad_correctos = 0;
   armar_fila(jugador.nationality, jugador.club, jugador.position, jugador.age, jugador.overall, jugador.heightCm);
-
   
   intentos_restantes--;
   actualizar_intentos_restantes(intentos_restantes);
   if(cantidad_correctos === 6){
+    var partida = {
+      jugador: jugador.name,
+      resultado: "Ganado",
+      intentos: 8-intentos_restantes,
+      fecha: obtenerFecha(),
+      duracion: tiempo
+    };
+    guardar_partida(partida);
     victoria();
     return;
   }
 
   if(intentos_restantes === 0){
+    var partida = {
+      jugador: jugador.name,
+      resultado: "Perdido",
+      intentos: 8,
+      fecha: obtenerFecha(),
+      duracion: tiempo
+    };
+    guardar_partida(partida);
     derrota();
+    return;
   }
+
 }
 
 var cantidad_correctos = 0;
@@ -224,6 +241,11 @@ boton_cerrar_modal_victoria.addEventListener("click", function(){
   modal_victoria.classList.add("modal_oculto");
 });
 
+var boton_cerrar_modal_historial = document.getElementById("btn_cerrar_modal_historial");
+boton_cerrar_modal_historial.addEventListener("click", function() {
+  modal_historial.classList.add("modal_oculto");
+});
+
 var tiempo = 0;
 var intervalo = null;
 var cronometro_iniciado = false;
@@ -260,10 +282,10 @@ boton_modo.addEventListener("click", function () {
   document.body.classList.toggle("modo_oscuro");
 
   if (document.body.classList.contains("modo_oscuro")) {
-    localStorage.setItem("tema", "oscuro");
+    localStorage.setItem("modo", "oscuro");
     boton_modo.textContent = "☀️";
   } else {
-    localStorage.setItem("tema", "claro");
+    localStorage.setItem("modo", "claro");
     boton_modo.textContent = "🌙";
   }
 
@@ -281,4 +303,117 @@ window.addEventListener("load", function () {
     document.body.classList.add("modo_oscuro");
     boton_modo.textContent = "☀️";
   }
+});
+
+function guardar_partida(datos){
+  var historial = localStorage.getItem("historial");
+
+  if(historial){
+    historial = JSON.parse(historial);
+  }else{
+    historial = [];
+  }
+
+  historial.push(datos);
+
+  localStorage.setItem("historial", JSON.stringify(historial));
+}
+
+function obtenerFecha(){
+  var ahora = new Date();
+
+  var año = ahora.getFullYear();
+  var mes = ahora.getMonth() + 1;
+  var dia = ahora.getDate();
+  var horas = ahora.getHours();
+  var minutos = ahora.getMinutes();
+
+  if (mes < 10) mes = "0" + mes;
+  if (dia < 10) dia = "0" + dia;
+  if (horas < 10) horas = "0" + horas;
+  if (minutos < 10) minutos = "0" + minutos;
+
+  return año + "-" + mes + "-" + dia + " " + horas + ":" + minutos;
+}
+
+var modal_historial = document.getElementById("modal_historial");
+
+function abrirHistorial() {
+  modal_historial.classList.remove("modal_oculto");
+  renderizarHistorial();
+}
+
+function renderizarHistorial() {
+  
+  var contenedor = document.getElementById("lista_historial");
+  var historial = localStorage.getItem("historial");
+
+  if (!historial) {
+    contenedor.innerHTML = "<p>No hay partidas</p>";
+    return;
+  }
+
+  historial = JSON.parse(historial);
+
+  contenedor.innerHTML = "";
+
+  for (var i = 0; i < historial.length; i++) {
+    var partida = historial[i];
+
+    var div = document.createElement("div");
+    div.className = "item_historial";
+
+    div.innerHTML =
+      "<span>Jugador: " + partida.jugador + "</span>" +
+      "<span>Resultado: " + partida.resultado + "</span>" +
+      "<span>Intentos: " + partida.intentos + "</span>" +
+      "<span>Duración: " + partida.duracion + "</span>" +
+      "<span>Fecha: " + partida.fecha + "</span>";
+
+    contenedor.appendChild(div);
+  }
+}
+
+renderizarHistorial();
+
+var orden = "desc";
+
+var boton_ordenar_fecha = document.getElementById("btn_ordenar_fecha");
+boton_ordenar_fecha.addEventListener("click", function(){
+  var historial = JSON.parse(localStorage.getItem("historial"));
+
+  if(orden === "desc"){
+    orden = "asc";
+    historial.sort(function(a, b) {
+      return new Date(b.fecha) - new Date(a.fecha);
+    });
+  }else{
+    orden = "desc";
+    historial.sort(function(a, b) {
+      return new Date(a.fecha) - new Date(b.fecha);
+    });
+  }
+
+  localStorage.setItem("historial", JSON.stringify(historial));
+  renderizarHistorial();
+});
+
+var boton_ordenar_intentos = document.getElementById("btn_ordenar_intentos");
+boton_ordenar_intentos.addEventListener("click", function(){
+  var historial = JSON.parse(localStorage.getItem("historial"));
+
+  if(orden === "desc"){
+    orden = "asc";
+    historial.sort(function(a, b) {
+      return a.intentos - b.intentos;
+    });
+  }else{
+    orden = "desc";
+    historial.sort(function(a, b) {
+      return b.intentos - a.intentos;
+    });
+  }
+
+  localStorage.setItem("historial", JSON.stringify(historial));
+  renderizarHistorial();
 });

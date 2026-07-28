@@ -53,10 +53,10 @@ boton_modo.addEventListener("click", function () {
   document.body.classList.toggle("modo_oscuro");
 
   if (document.body.classList.contains("modo_oscuro")) {
-    localStorage.setItem("tema", "oscuro");
+    localStorage.setItem("modo", "oscuro");
     boton_modo.textContent = "☀️";
   } else {
-    localStorage.setItem("tema", "claro");
+    localStorage.setItem("modo", "claro");
     boton_modo.textContent = "🌙";
   }
 

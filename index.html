@@ -42,6 +42,8 @@
 
         <button id="boton_modo">🌙</button>
 
+        <button onclick="abrirHistorial()" class="boton_historial">Ver Historial</button>
+
     </main>
 
     <div id="modal_perdiste" class="modal_oculto">
@@ -72,6 +74,21 @@
             </div>
 
             <button id="btn_cerrar_modal_victoria">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="modal_historial" class="modal_oculto">
+        <div class="modal_contenido">
+            <h2>Historial de partidas</h2>
+
+            <div class="controles_historial">
+            <button id="btn_ordenar_fecha" class="boton_modal_historial">Ordenar por fecha</button>
+            <button id="btn_ordenar_intentos" class="boton_modal_historial">Ordenar por intentos</button>
+            </div>
+
+            <div id="lista_historial"></div>
+
+            <button id="btn_cerrar_modal_historial" class="boton_modal_historial">Cerrar</button>
         </div>
     </div>
 
