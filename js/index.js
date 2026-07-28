@@ -36,7 +36,7 @@ var jugador_random;
 async function iniciar(){
   jugador_random = await generar_jugador();
   input_busqueda.disabled = false;
-  console.log(jugador_random);
+  // console.log(jugador_random);
 }
 
 iniciar();
@@ -156,6 +156,7 @@ function borrar_tablero(){
 }
 
 function reiniciar(){
+  input_busqueda.disabled = true;
   iniciar();
   intentos_restantes = 8;
   actualizar_intentos_restantes(intentos_restantes);
@@ -252,3 +253,32 @@ function reiniciarCronometro() {
     cronometro_iniciado = false;
     tiempo_texto.innerHTML = "Tiempo: 0s";
 }
+
+var boton_modo = document.getElementById("boton_modo");
+
+boton_modo.addEventListener("click", function () {
+  document.body.classList.toggle("modo_oscuro");
+
+  if (document.body.classList.contains("modo_oscuro")) {
+    localStorage.setItem("tema", "oscuro");
+    boton_modo.textContent = "☀️";
+  } else {
+    localStorage.setItem("tema", "claro");
+    boton_modo.textContent = "🌙";
+  }
+
+  if (document.body.classList.contains("modo_oscuro")) {
+    localStorage.setItem("modo", "oscuro");
+  } else {
+    localStorage.setItem("modo", "claro");
+  }
+});
+
+window.addEventListener("load", function () {
+  var modo_guardado = localStorage.getItem("modo");
+
+  if (modo_guardado === "oscuro") {
+    document.body.classList.add("modo_oscuro");
+    boton_modo.textContent = "☀️";
+  }
+});

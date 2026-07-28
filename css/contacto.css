@@ -1,3 +1,37 @@
+:root {
+  --color-fondo: #f5f5f5;
+  --color-texto: #222;
+  --color-card: #ffffff;
+  --color-borde: #cccccc;
+  
+  --color-autocompletado: #e3f2fd;
+  --color-autocompletado-hover: #bbdefb;
+
+  --color-input: #e3f2fd;
+
+  --color-boton: #bbdefb;
+  --color-boton-hover: #e3f2fd;
+  --color-volver: #64748b;
+  --color-volver-hover: #475569;
+}
+
+body.modo_oscuro {
+  --color-fondo: #121212;
+  --color-texto: #e0e0e0;
+  --color-card: #0f172a;
+  --color-borde: #333;
+  
+  --color-autocompletado: #1e293b;
+  --color-autocompletado-hover: #334155;
+
+  --color-input: #f5f5f5;
+
+  --color-boton: #3b82f6;
+  --color-boton-hover: #2563eb;
+  --color-volver: #64748b;
+  --color-volver-hover: #475569;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,12 +40,12 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: var(--color-fondo);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: var(--color-texto);
 }
 
 .contenedor-contacto {
@@ -21,7 +55,7 @@ body {
 }
 
 .card-contacto {
-  background-color: #1e293b;
+  background-color: var(--color-card);
   padding: 30px;
   border-radius: 12px;
 
@@ -39,7 +73,6 @@ body {
 .descripcion {
   text-align: center;
   font-size: 14px;
-  color: #cbd5f5;
 }
 
 .formulario-contacto {
@@ -59,6 +92,7 @@ input, textarea {
   border-radius: 8px;
   border: none;
   font-size: 14px;
+  background-color: var(--color-input);
 }
 
 input:focus, textarea:focus {
@@ -70,15 +104,16 @@ input:focus, textarea:focus {
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background-color: #3b82f6;
-  color: white;
+  background-color: var(--color-boton);
+  color: var(--color-texto);
   font-size: 16px;
   cursor: pointer;
   transition: 0.2s;
+  font-weight: bold;
 }
 
 .boton-enviar:hover {
-  background-color: #2563eb;
+  background-color: var(--color-boton-hover);
 }
 
 .boton-link {
@@ -89,23 +124,32 @@ input:focus, textarea:focus {
   padding: 12px 20px;
   border-radius: 8px;
 
-  background-color: #3b82f6;
-  color: white;
+  background-color: var(--color-volver);
+  color: var(--color-texto);
   font-weight: bold;
 
   transition: 0.2s;
 }
 
 .boton-link:hover {
-  background-color: #2563eb;
+  background-color: var(--color-volver-hover);
 }
 
-.volver {
-  background-color: #64748b;
+#boton_modo {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-boton);
+  color: var(--color-texto);
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: bold;
 }
 
-.volver:hover {
-  background-color: #475569;
+#boton_modo:hover {
+  background-color: var(--color-boton-hover);
 }
 
 .modal {
