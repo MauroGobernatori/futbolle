@@ -1,3 +1,5 @@
+"use strict";
+
 var form = document.getElementById("form-contacto")
 
 form.addEventListener("submit", function(e) {

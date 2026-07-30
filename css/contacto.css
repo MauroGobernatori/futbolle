@@ -183,3 +183,22 @@ input:focus, textarea:focus {
   border-radius: 6px;
   cursor: pointer;
 }
+
+.boton_link {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+
+  padding: 12px 20px;
+  border-radius: 8px;
+
+  background-color: var(--color-boton);
+  color: var(--color-texto);
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+.boton_link:hover {
+  background-color: var(--color-boton-hover);
+}

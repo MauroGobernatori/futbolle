@@ -12,30 +12,48 @@
 
         <header class="encabezado">
             <h1>Futbolle</h1>
-            <p class="nombre_jugador">Jugador: <span id="nombre_usuario"></span></p>
         </header>
 
-        <section class="seccion_busqueda">
-            <input type="text" id="input_busqueda" placeholder="Buscar jugador..." disabled>
-            <ul id="lista_autocompletado" class="autocompletado"></ul>
-        </section>
+        <div id="pantalla_inicio" class="pantalla_inicio contenedor">
+            <h2>Bienvenido</h2>
 
-        <section class="nombre_repetido oculto" id="nombre_repetido">
-            <p>Ese nombre ya fue usado</p>
-        </section>
+            <input type="text" id="input_nombre" placeholder="Tu nombre">
 
-        <section class="info_juego">
-            <p>Intentos restantes: <span id="intentos"></span></p>
-            <p><span id="tiempo">Tiempo: 0s</span></p>
-        </section>
+            <select id="select_dificultad">
+                <option value="">Seleccionar dificultad</option>
+                <option value="facil" disabled>Fácil</option>
+                <option value="media" disabled>Media</option>
+                <option value="dificil">Difícil</option>
+            </select>
 
-        <section>
-            <table id="tablero" class="tablero">
+            <button id="btn_iniciar_juego">Jugar</button>
+        </div>
 
-            </table>
-        </section>
+        <div id="pantalla_juego" class="pantalla_juego oculto">
+            <section class="seccion_busqueda">
+                <input type="text" id="input_busqueda" placeholder="Buscar jugador..." disabled>
+                <ul id="lista_autocompletado" class="autocompletado"></ul>
+            </section>
 
-        <button id="boton_reiniciar" class="boton_reiniciar">Reiniciar</button>
+            <section class="nombre_repetido oculto" id="nombre_repetido">
+                <p>Ese nombre ya fue usado</p>
+            </section>
+
+            <section class="info_juego">
+                <p>Intentos restantes: <span id="intentos"></span></p>
+                <p><span id="tiempo">Tiempo: 0s</span></p>
+            </section>
+
+            <section>
+                <table id="tablero" class="tablero">
+
+                </table>
+            </section>
+
+            <button id="boton_reiniciar" class="boton_reiniciar">Reiniciar</button>
+        </div>
+
+        
         <a href="contacto.html" class="boton_link">
         Ir a Contacto
         </a>

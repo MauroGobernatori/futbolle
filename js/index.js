@@ -1,7 +1,54 @@
+"use strict";
+
 var section_nombre_repetido = document.getElementById("nombre_repetido");
 var tablero = document.getElementById("tablero");
 var nombres_usados = [];
+var intentos_totales = 8;
 var intentos_restantes = 8;
+
+var boton_reiniciar = document.getElementById("boton_reiniciar");
+
+var jugador_random;
+
+var lista_autocompletado = document.getElementById("lista_autocompletado");
+var input_busqueda = document.getElementById("input_busqueda");
+
+var cantidad_correctos = 0;
+
+var modal_derrota = document.getElementById("modal_perdiste");
+var contenedor_jugador = document.getElementById("jugador_secreto");
+var boton_cerrar_modal_derrota = document.getElementById("btn_cerrar_modal_derrota");
+
+var modal_victoria = document.getElementById("modal_victoria");
+
+var tiempo_span = document.getElementById("tiempo_final");
+var intentos_span = document.getElementById("intentos_usados");
+
+var boton_cerrar_modal_victoria = document.getElementById("btn_cerrar_modal_victoria");
+var boton_cerrar_modal_historial = document.getElementById("btn_cerrar_modal_historial");
+
+var tiempo = 0;
+var intervalo = null;
+var cronometro_iniciado = false;
+var tiempo_texto = document.getElementById("tiempo");
+
+var boton_modo = document.getElementById("boton_modo");
+
+var modal_historial = document.getElementById("modal_historial");
+
+var orden = "desc";
+var boton_ordenar_fecha = document.getElementById("btn_ordenar_fecha");
+
+var boton_ordenar_intentos = document.getElementById("btn_ordenar_intentos");
+
+var nombre_usuario = "";
+var dificultad = "";
+
+var input_nombre = document.getElementById("input_nombre");
+var select_dificultad = document.getElementById("select_dificultad");
+var pantalla_inicio = document.getElementById("pantalla_inicio");
+var pantalla_juego = document.getElementById("pantalla_juego");
+var boton_iniciar_juego = document.getElementById("btn_iniciar_juego");
 
 function actualizar_intentos_restantes(intentos_restantes){
   var intentos = document.getElementById("intentos");
@@ -10,7 +57,6 @@ function actualizar_intentos_restantes(intentos_restantes){
 
 actualizar_intentos_restantes(intentos_restantes);
 
-var boton_reiniciar = document.getElementById("boton_reiniciar");
 boton_reiniciar.addEventListener("click", function (evento){
   reiniciar();
 });
@@ -31,8 +77,6 @@ async function generar_jugador(){
   return jugador;
 }
 
-var jugador_random;
-
 async function iniciar(){
   jugador_random = await generar_jugador();
   input_busqueda.disabled = false;
@@ -40,9 +84,6 @@ async function iniciar(){
 }
 
 iniciar();
-
-var lista_autocompletado = document.getElementById("lista_autocompletado");
-var input_busqueda = document.getElementById("input_busqueda");
 
 input_busqueda.addEventListener("focus", function(){
   section_nombre_repetido.classList.add("oculto");
@@ -65,7 +106,7 @@ function autocompletado(nombre){
       // console.log(data)
       lista_autocompletado.innerHTML = "";
 
-      for(i=0; i< data.length; i++){
+      for(var i=0; i< data.length; i++){
 
         var li_autocompletado = document.createElement("li");
 
@@ -88,7 +129,7 @@ function intento_jugador(jugador){
 
   iniciarCronometro();
 
-  for(i=0;i<nombres_usados.length;i++){
+  for(var i=0;i<nombres_usados.length;i++){
     if(jugador.name === nombres_usados[i]){
       nombre_repetido();
       return;
@@ -106,34 +147,41 @@ function intento_jugador(jugador){
   intentos_restantes--;
   actualizar_intentos_restantes(intentos_restantes);
   if(cantidad_correctos === 6){
+    victoria();
+    var puntaje = calcularPuntaje(true, intentos_totales-intentos_restantes, tiempo);
     var partida = {
+      usuario: nombre_usuario,
       jugador: jugador.name,
       resultado: "Ganado",
-      intentos: 8-intentos_restantes,
+      dificultad: dificultad,
+      intentos: intentos_totales-intentos_restantes,
       fecha: obtenerFecha(),
-      duracion: tiempo
+      duracion: tiempo,
+      puntaje: puntaje
     };
     guardar_partida(partida);
-    victoria();
+    
     return;
   }
 
   if(intentos_restantes === 0){
+    derrota();
+    var puntaje = calcularPuntaje(false, intentos_totales-intentos_restantes, tiempo);
     var partida = {
+      usuario: nombre_usuario,
       jugador: jugador.name,
       resultado: "Perdido",
-      intentos: 8,
+      dificultad: dificultad,
+      intentos: intentos_totales,
       fecha: obtenerFecha(),
-      duracion: tiempo
+      duracion: tiempo,
+      puntaje: puntaje
     };
     guardar_partida(partida);
-    derrota();
     return;
   }
 
 }
-
-var cantidad_correctos = 0;
 
 function armar_fila(nacionalidad, club, posicion, edad, overall, altura){
   var datos = [nacionalidad, club, posicion, edad, overall, altura];
@@ -142,7 +190,7 @@ function armar_fila(nacionalidad, club, posicion, edad, overall, altura){
   var fila = document.createElement("tr");
   fila.classList.add("fila");
 
-  for(i=0;i<datos.length;i++){
+  for(var i=0;i<datos.length;i++){
     var columna_td = document.createElement("td");
     columna_td.classList.add("celda");
     columna_td.textContent = datos[i];
@@ -195,10 +243,6 @@ function derrota(){
   detenerCronometro();
 }
 
-var modal_derrota = document.getElementById("modal_perdiste");
-var contenedor_jugador = document.getElementById("jugador_secreto");
-var boton_cerrar_modal_derrota = document.getElementById("btn_cerrar_modal_derrota");
-
 boton_cerrar_modal_derrota.addEventListener("click", function(){
   modal_derrota.classList.add("modal_oculto");
 });
@@ -224,11 +268,6 @@ function victoria(){
   detenerCronometro();
 }
 
-var modal_victoria = document.getElementById("modal_victoria");
-
-var tiempo_span = document.getElementById("tiempo_final");
-var intentos_span = document.getElementById("intentos_usados");
-
 function mostrarVictoria(tiempo, intentos) {
   tiempo_span.textContent = tiempo;
   intentos_span.textContent = intentos;
@@ -236,20 +275,13 @@ function mostrarVictoria(tiempo, intentos) {
   modal_victoria.classList.remove("modal_oculto");
 }
 
-var boton_cerrar_modal_victoria = document.getElementById("btn_cerrar_modal_victoria");
 boton_cerrar_modal_victoria.addEventListener("click", function(){
   modal_victoria.classList.add("modal_oculto");
 });
 
-var boton_cerrar_modal_historial = document.getElementById("btn_cerrar_modal_historial");
 boton_cerrar_modal_historial.addEventListener("click", function() {
   modal_historial.classList.add("modal_oculto");
 });
-
-var tiempo = 0;
-var intervalo = null;
-var cronometro_iniciado = false;
-var tiempo_texto = document.getElementById("tiempo");
 
 function iniciarCronometro() {
     if (!cronometro_iniciado) {
@@ -275,8 +307,6 @@ function reiniciarCronometro() {
     cronometro_iniciado = false;
     tiempo_texto.innerHTML = "Tiempo: 0s";
 }
-
-var boton_modo = document.getElementById("boton_modo");
 
 boton_modo.addEventListener("click", function () {
   document.body.classList.toggle("modo_oscuro");
@@ -336,8 +366,6 @@ function obtenerFecha(){
   return año + "-" + mes + "-" + dia + " " + horas + ":" + minutos;
 }
 
-var modal_historial = document.getElementById("modal_historial");
-
 function abrirHistorial() {
   modal_historial.classList.remove("modal_oculto");
   renderizarHistorial();
@@ -364,11 +392,14 @@ function renderizarHistorial() {
     div.className = "item_historial";
 
     div.innerHTML =
+      "<span>Usuario: " + partida.usuario + "</span>" +
       "<span>Jugador: " + partida.jugador + "</span>" +
       "<span>Resultado: " + partida.resultado + "</span>" +
+      "<span>Dificultad: " + partida.dificultad + "</span>" +
       "<span>Intentos: " + partida.intentos + "</span>" +
       "<span>Duración: " + partida.duracion + "</span>" +
-      "<span>Fecha: " + partida.fecha + "</span>";
+      "<span>Fecha: " + partida.fecha + "</span>" +
+      "<span>Puntaje: " + partida.puntaje + "</span>";
 
     contenedor.appendChild(div);
   }
@@ -376,9 +407,6 @@ function renderizarHistorial() {
 
 renderizarHistorial();
 
-var orden = "desc";
-
-var boton_ordenar_fecha = document.getElementById("btn_ordenar_fecha");
 boton_ordenar_fecha.addEventListener("click", function(){
   var historial = JSON.parse(localStorage.getItem("historial"));
 
@@ -398,7 +426,6 @@ boton_ordenar_fecha.addEventListener("click", function(){
   renderizarHistorial();
 });
 
-var boton_ordenar_intentos = document.getElementById("btn_ordenar_intentos");
 boton_ordenar_intentos.addEventListener("click", function(){
   var historial = JSON.parse(localStorage.getItem("historial"));
 
@@ -417,3 +444,46 @@ boton_ordenar_intentos.addEventListener("click", function(){
   localStorage.setItem("historial", JSON.stringify(historial));
   renderizarHistorial();
 });
+
+boton_iniciar_juego.addEventListener("click", function(){
+  iniciarJuego();
+});
+
+function iniciarJuego() {
+  if (input_nombre.value === "" || select_dificultad.value === "") {
+    return;
+  }
+
+  nombre_usuario = input_nombre.value;
+  dificultad = select_dificultad.value;
+
+  pantalla_inicio.classList.add("oculto");
+  pantalla_juego.classList.remove("oculto");
+}
+
+function calcularPuntaje(ganado, intentos, tiempoSegundos) {
+
+  if (!ganado){
+    return 0;
+  } 
+
+  var puntosBase = 100;
+
+  var penalizacion = (intentos - 1) * 10;
+  
+  var bonus = 0;
+
+  if (tiempoSegundos < 60) {
+    bonus = 20;
+  } else if (tiempoSegundos < 120) {
+    bonus = 10;
+  }
+
+  var puntaje = puntosBase - penalizacion + bonus;
+
+  if (puntaje < 10) {
+    puntaje = 10;
+  }
+
+  return puntaje;
+}
