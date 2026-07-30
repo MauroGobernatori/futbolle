@@ -1,62 +1,66 @@
-⚽ Futbolle
+⚽ Futbolle  
 
-Juego web inspirado en Wordle, donde el objetivo es adivinar un jugador de fútbol a partir de pistas generadas por cada intento.
+Juego web inspirado en Wordle, donde el objetivo es adivinar un jugador de fútbol a partir de pistas generadas por cada intento.  
 
-🎮 Cómo jugar
-Ingresás el nombre de un jugador
-El sistema compara tu intento con el jugador secreto
-Se muestran pistas mediante:
-🟩 Coincidencia correcta
-🟥 Incorrecto
-🔼🔽 Indican si el valor es mayor o menor (edad, altura, etc.)
+🎮 Cómo jugar  
+Ingresás el nombre de un jugador  
+El sistema compara tu intento con el jugador secreto  
+Se muestran pistas mediante:  
+🟩 Coincidencia correcta  
+🟥 Incorrecto  
+🔼🔽 Indican si el valor es mayor o menor (edad, altura, etc.)  
 
-Ganás cuando adivinás el jugador.
+Ganás cuando adivinás el jugador.  
 
-🧠 Mecánicas
-Un jugador secreto por partida
-Feedback visual en cada intento
-Sistema de intentos hasta acertar o perder
-Registro de partidas jugadas
-🏆 Sistema de puntuación
+🧠 Mecánicas  
+Un jugador secreto por partida  
+Feedback visual en cada intento  
+Sistema de intentos hasta acertar o perder  
+Registro de partidas jugadas  
 
-El puntaje se calcula al ganar la partida:
+🏆 Sistema de puntuación  
+El puntaje se calcula al ganar la partida:  
 
-puntaje = 100 - (intentos - 1) * 10 + bonus
-Bonus por tiempo
-+20 → menos de 60 segundos
-+10 → menos de 120 segundos
-+0 → más de 120 segundos
-Reglas
-Si se pierde → 0 puntos
-Puntaje mínimo al ganar → 10 puntos
-💾 Historial
+puntaje = 100 - (intentos - 1) * 10 + bonus  
 
-Se guarda información de cada partida:
+Bonus por tiempo  
++20 → menos de 60 segundos  
++10 → menos de 120 segundos  
++0 → más de 120 segundos  
 
-Nombre del jugador
-Resultado (ganado/perdido)
-Cantidad de intentos
-Duración
-Puntaje
+Reglas  
+Si se pierde → 0 puntos  
+Puntaje mínimo al ganar → 10 puntos  
 
-Usando localStorage.
+💾 Historial  
+Se guarda información de cada partida:  
 
-🛠️ Tecnologías
-HTML
-CSS
-JavaScript
-📂 Estructura
-.
-├── index.html
-├── style.css
-├── script.js
-└── data.js
-▶️ Ejecutar el proyecto
-Clonar el repositorio
-Abrir index.html en el navegador
-🚧 Estado
+Nombre del jugador  
+Resultado (ganado/perdido)  
+Cantidad de intentos  
+Duración  
+Puntaje  
 
-Proyecto en desarrollo / trabajo práctico.
+Usando localStorage.  
 
-👤 Autor
-Mauro Gobernatori
+🛠️ Tecnologías  
+HTML  
+CSS  
+JavaScript  
+
+📂 Estructura  
+.  
+├── index.html  
+├── style.css  
+├── script.js  
+└── data.js  
+
+▶️ Ejecutar el proyecto  
+Clonar el repositorio  
+Abrir index.html en el navegador  
+
+🚧 Estado  
+Proyecto en desarrollo / trabajo práctico.  
+
+👤 Autor  
+Mauro Gobernatori  
