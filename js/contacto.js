@@ -3,9 +3,10 @@
 var form = document.getElementById("form-contacto");
 
 var boton_cerrar_modal = document.getElementById("cerrar_modal");
+var boton_modo = document.getElementById("boton_modo");
 
 boton_cerrar_modal.addEventListener("click", function(e){
-  cerrarModal();
+    cerrarModal();
 });
 
 form.addEventListener("submit", function(e) {
@@ -47,42 +48,40 @@ form.addEventListener("submit", function(e) {
 });
 
 function mostrarModal(mensaje) {
-  var modal = document.getElementById("modal");
-  var texto = document.getElementById("modal_mensaje");
+    var modal = document.getElementById("modal");
+    var texto = document.getElementById("modal_mensaje");
 
-  texto.textContent = mensaje;
-  modal.style.display = "flex";
+    texto.textContent = mensaje;
+    modal.style.display = "flex";
 }
 
 function cerrarModal() {
-  document.getElementById("modal").style.display = "none";
+    document.getElementById("modal").style.display = "none";
 }
 
-var boton_modo = document.getElementById("boton_modo");
-
 boton_modo.addEventListener("click", function () {
-  document.body.classList.toggle("modo_oscuro");
+    document.body.classList.toggle("modo_oscuro");
 
-  if (document.body.classList.contains("modo_oscuro")) {
-    localStorage.setItem("modo", "oscuro");
-    boton_modo.textContent = "☀️";
-  } else {
-    localStorage.setItem("modo", "claro");
-    boton_modo.textContent = "🌙";
-  }
+    if (document.body.classList.contains("modo_oscuro")) {
+        localStorage.setItem("modo", "oscuro");
+        boton_modo.textContent = "☀️";
+    } else {
+        localStorage.setItem("modo", "claro");
+        boton_modo.textContent = "🌙";
+    }
 
-  if (document.body.classList.contains("modo_oscuro")) {
-    localStorage.setItem("modo", "oscuro");
-  } else {
-    localStorage.setItem("modo", "claro");
-  }
+    if (document.body.classList.contains("modo_oscuro")) {
+        localStorage.setItem("modo", "oscuro");
+    } else {
+        localStorage.setItem("modo", "claro");
+    }
 });
 
 window.addEventListener("load", function () {
-  var modo_guardado = localStorage.getItem("modo");
+    var modo_guardado = localStorage.getItem("modo");
 
-  if (modo_guardado === "oscuro") {
-    document.body.classList.add("modo_oscuro");
-    boton_modo.textContent = "☀️";
-  }
+    if (modo_guardado === "oscuro") {
+        document.body.classList.add("modo_oscuro");
+        boton_modo.textContent = "☀️";
+    }
 });

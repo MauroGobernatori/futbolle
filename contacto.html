@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
 
-  <link rel="stylesheet" href="./css/contacto.css">
+    <link rel="stylesheet" href="./css/contacto.css">
 </head>
 <body>
+    <main class="contenedor_contacto">
+        <section class="card_contacto">
 
-  <main class="contenedor_contacto">
-    <section class="card_contacto">
+            <h1>Contacto</h1>
+            <p class="descripcion">
+                Si tenés alguna consulta o sugerencia, completá el formulario.
+            </p>
 
-      <h1>Contacto</h1>
-      <p class="descripcion">
-        Si tenés alguna consulta o sugerencia, completá el formulario.
-      </p>
+            <form class="formulario_contacto" action="mailto:ejemplo@example.com" method="post" enctype="text/plain"
+                id="form-contacto">
+                <div class="grupo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" required>
+                </div>
 
-      <form class="formulario_contacto" action="mailto:ejemplo@example.com" method="post" enctype="text/plain" id="form-contacto">
-        <div class="grupo">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" required>
-        </div>
+                <div class="grupo">
+                    <label for="text">Email</label>
+                    <input type="text" id="email" required>
+                </div>
 
-        <div class="grupo">
-          <label for="text">Email</label>
-          <input type="text" id="email" required>
-        </div>
+                <div class="grupo">
+                    <label for="asunto">Asunto</label>
+                    <input type="text" id="asunto" required>
+                </div>
 
-        <div class="grupo">
-          <label for="asunto">Asunto</label>
-          <input type="text" id="asunto" required>
-        </div>
+                <div class="grupo">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" rows="5" required></textarea>
+                </div>
 
-        <div class="grupo">
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" rows="5" required></textarea>
-        </div>
+                <button type="submit" class="boton_enviar">
+                    Enviar mensaje
+                </button>
+                <a href="index.html" class="boton_link">
+                    Volver al Inicio
+                </a>
 
-        <button type="submit" class="boton_enviar">
-          Enviar mensaje
-        </button>
-        <a href="index.html" class="boton_link">
-            Volver al Inicio
-        </a>
+            </form>
 
-      </form>
+            <button id="boton_modo">🌙</button>
 
-      <button id="boton_modo">🌙</button>
+            <a href="https://github.com/MauroGobernatori/futbolle" target="_blank" class="boton_link">
+                GitHub
+            </a>
 
-      <a href="https://github.com/MauroGobernatori/futbolle" target="_blank" class="boton_link">
-        GitHub
-      </a>
-
-    </section>
-  </main>
+        </section>
+    </main>
 
     <div id="modal" class="modal">
         <div class="modal_contenido">
@@ -63,7 +63,6 @@
         </div>
     </div>
 
-  <script src="./js/contacto.js"></script>
-
+    <script src="./js/contacto.js"></script>
 </body>
 </html>
