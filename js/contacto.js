@@ -1,17 +1,49 @@
 "use strict";
 
 var form = document.getElementById("form-contacto");
-
 var boton_cerrar_modal = document.getElementById("cerrar_modal");
 var boton_modo = document.getElementById("boton_modo");
+var modal = document.getElementById("modal");
+var modal_mensaje = document.getElementById("modal_mensaje");
 
-boton_cerrar_modal.addEventListener("click", function(e){
-    cerrarModal();
-});
+function mostrarModal(mensaje) {
+    modal_mensaje.textContent = mensaje;
+    modal.style.display = "flex";
+}
 
-form.addEventListener("submit", function(e) {
+function cerrarModal() {
+    modal.style.display = "none";
+}
 
-    e.preventDefault();
+function botonModoClick(){
+    document.body.classList.toggle("modo_oscuro");
+
+    if (document.body.classList.contains("modo_oscuro")) {
+        localStorage.setItem("modo", "oscuro");
+        boton_modo.textContent = "☀️";
+    } else {
+        localStorage.setItem("modo", "claro");
+        boton_modo.textContent = "🌙";
+    }
+
+    if (document.body.classList.contains("modo_oscuro")) {
+        localStorage.setItem("modo", "oscuro");
+    } else {
+        localStorage.setItem("modo", "claro");
+    }
+}
+
+function guardarModoClaroOscuro(){
+    var modo_guardado = localStorage.getItem("modo");
+
+    if (modo_guardado === "oscuro") {
+        document.body.classList.add("modo_oscuro");
+        boton_modo.textContent = "☀️";
+    }
+}
+
+function submitForm(evento){
+    evento.preventDefault();
 
     var nombre = document.getElementById("nombre").value.trim();
     var email = document.getElementById("email").value.trim();
@@ -45,43 +77,9 @@ form.addEventListener("submit", function(e) {
     + encodeURIComponent(asunto) 
     + "&body=" 
     + encodeURIComponent(mensaje);
-});
-
-function mostrarModal(mensaje) {
-    var modal = document.getElementById("modal");
-    var texto = document.getElementById("modal_mensaje");
-
-    texto.textContent = mensaje;
-    modal.style.display = "flex";
 }
 
-function cerrarModal() {
-    document.getElementById("modal").style.display = "none";
-}
-
-boton_modo.addEventListener("click", function () {
-    document.body.classList.toggle("modo_oscuro");
-
-    if (document.body.classList.contains("modo_oscuro")) {
-        localStorage.setItem("modo", "oscuro");
-        boton_modo.textContent = "☀️";
-    } else {
-        localStorage.setItem("modo", "claro");
-        boton_modo.textContent = "🌙";
-    }
-
-    if (document.body.classList.contains("modo_oscuro")) {
-        localStorage.setItem("modo", "oscuro");
-    } else {
-        localStorage.setItem("modo", "claro");
-    }
-});
-
-window.addEventListener("load", function () {
-    var modo_guardado = localStorage.getItem("modo");
-
-    if (modo_guardado === "oscuro") {
-        document.body.classList.add("modo_oscuro");
-        boton_modo.textContent = "☀️";
-    }
-});
+form.addEventListener("submit", submitForm);
+window.addEventListener("load", guardarModoClaroOscuro);
+boton_modo.addEventListener("click", botonModoClick);
+boton_cerrar_modal.addEventListener("click", cerrarModal);

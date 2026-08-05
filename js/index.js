@@ -74,10 +74,6 @@ function abrirHistorial() {
     renderizarHistorial();
 }
 
-boton_historial.addEventListener("click", function(e){
-    abrirHistorial();
-});
-
 function actualizar_intentos_restantes(intentos_restantes){
     var intentos = document.getElementById("intentos");
     intentos.innerText = intentos_restantes;
@@ -127,10 +123,6 @@ function reiniciar(){
     reiniciarCronometro();
 }
 
-boton_reiniciar.addEventListener("click", function (evento){
-    reiniciar();
-});
-
 function mostrarError(msg) {
     mensaje_error.textContent = msg;
     modal_error.classList.remove("modal_oculto");
@@ -155,10 +147,6 @@ async function generar_jugador(){
 
     return jugador;
 }
-
-input_busqueda.addEventListener("focus", function(){
-    section_nombre_repetido.classList.add("oculto");
-});
 
 function nombre_repetido(){
     input_busqueda.value = "";
@@ -390,28 +378,48 @@ function autocompletado(nombre){
         });
 }
 
-input_busqueda.addEventListener("input", function(evento){
+function iniciarJuego() {
+    if (input_nombre.value === "" || select_dificultad.value === "" || input_nombre.value.length < 3) {
+        return;
+    }
+
+    nombre_usuario = input_nombre.value;
+    dificultad = select_dificultad.value;
+
+    pantalla_inicio.classList.add("oculto");
+    pantalla_juego.classList.remove("oculto");
+}
+
+function modalVictoriaOcultar(){
+    modal_victoria.classList.add("modal_oculto");
+}
+
+function modalDerrotaOcultar(){
+    modal_derrota.classList.add("modal_oculto");
+}
+
+function modalHistorialOcultar(){
+    modal_historial.classList.add("modal_oculto");
+}
+
+function modalErrorOcultar(){
+    modal_error.classList.add("modal_oculto");
+}
+
+function inputBusquedaOcultar(){
+    section_nombre_repetido.classList.add("oculto");
+}
+
+function inputBusquedaActivar(evento){
     var largo_texto = evento.target.value.length;
     if(largo_texto >= 3){
         autocompletado(evento.target.value)
     }else{
         lista_autocompletado.innerHTML = "";
     }
-});
+}
 
-boton_cerrar_modal_derrota.addEventListener("click", function(){
-    modal_derrota.classList.add("modal_oculto");
-});
-
-boton_cerrar_modal_victoria.addEventListener("click", function(){
-    modal_victoria.classList.add("modal_oculto");
-});
-
-boton_cerrar_modal_historial.addEventListener("click", function() {
-    modal_historial.classList.add("modal_oculto");
-});
-
-boton_modo.addEventListener("click", function () {
+function botonModoClick(){
     document.body.classList.toggle("modo_oscuro");
 
     if (document.body.classList.contains("modo_oscuro")) {
@@ -427,18 +435,18 @@ boton_modo.addEventListener("click", function () {
     } else {
         localStorage.setItem("modo", "claro");
     }
-});
+}
 
-window.addEventListener("load", function () {
+function guardarModoClaroOscuro(){
     var modo_guardado = localStorage.getItem("modo");
 
     if (modo_guardado === "oscuro") {
         document.body.classList.add("modo_oscuro");
         boton_modo.textContent = "☀️";
     }
-});
+}
 
-boton_ordenar_fecha.addEventListener("click", function(){
+function ordenarFecha(){
     var historial = JSON.parse(localStorage.getItem("historial"));
 
     if(orden === "desc"){
@@ -455,9 +463,9 @@ boton_ordenar_fecha.addEventListener("click", function(){
 
     localStorage.setItem("historial", JSON.stringify(historial));
     renderizarHistorial();
-});
+}
 
-boton_ordenar_intentos.addEventListener("click", function(){
+function ordenarIntentos(){
     var historial = JSON.parse(localStorage.getItem("historial"));
 
     if(orden === "desc"){
@@ -474,27 +482,21 @@ boton_ordenar_intentos.addEventListener("click", function(){
 
     localStorage.setItem("historial", JSON.stringify(historial));
     renderizarHistorial();
-});
-
-function iniciarJuego() {
-    if (input_nombre.value === "" || select_dificultad.value === "" || input_nombre.value.length < 3) {
-        return;
-    }
-
-    nombre_usuario = input_nombre.value;
-    dificultad = select_dificultad.value;
-
-    pantalla_inicio.classList.add("oculto");
-    pantalla_juego.classList.remove("oculto");
 }
 
-boton_iniciar_juego.addEventListener("click", function(){
-    iniciarJuego();
-});
-
-boton_cerrar_modal_error.addEventListener("click", function() {
-    modal_error.classList.add("modal_oculto");
-});
+input_busqueda.addEventListener("focus", inputBusquedaOcultar);
+input_busqueda.addEventListener("input", inputBusquedaActivar);
+boton_cerrar_modal_derrota.addEventListener("click", modalDerrotaOcultar);
+boton_cerrar_modal_victoria.addEventListener("click", modalVictoriaOcultar);
+boton_cerrar_modal_historial.addEventListener("click", modalHistorialOcultar);
+boton_cerrar_modal_error.addEventListener("click", modalErrorOcultar);
+boton_modo.addEventListener("click", botonModoClick);
+window.addEventListener("load", guardarModoClaroOscuro);
+boton_ordenar_fecha.addEventListener("click", ordenarFecha);
+boton_ordenar_intentos.addEventListener("click", ordenarIntentos);
+boton_iniciar_juego.addEventListener("click", iniciarJuego);
+boton_historial.addEventListener("click", abrirHistorial);
+boton_reiniciar.addEventListener("click", reiniciar);
 
 iniciar();
 actualizar_intentos_restantes(intentos_restantes);
