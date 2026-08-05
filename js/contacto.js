@@ -1,18 +1,24 @@
 "use strict";
 
-var form = document.getElementById("form-contacto")
+var form = document.getElementById("form-contacto");
+
+var boton_cerrar_modal = document.getElementById("cerrar_modal");
+
+boton_cerrar_modal.addEventListener("click", function(e){
+  cerrarModal();
+});
 
 form.addEventListener("submit", function(e) {
 
     e.preventDefault();
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const asunto = document.getElementById("asunto").value.trim();
-    const mensaje = document.getElementById("mensaje").value.trim();
+    var nombre = document.getElementById("nombre").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var asunto = document.getElementById("asunto").value.trim();
+    var mensaje = document.getElementById("mensaje").value.trim();
 
-    const nombre_regex = /^[a-zA-Z0-9\s]+$/;
-    const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var nombre_regex = /^[a-zA-Z0-9\s]+$/;
+    var email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!nombre_regex.test(nombre)) {
         mostrarModal("El nombre debe ser alfanumérico");
@@ -34,12 +40,15 @@ form.addEventListener("submit", function(e) {
         return;
     }
 
-    window.location.href = `mailto:ejemplo@example.com?subject=${asunto}&body=${mensaje}`;
+    window.location.href = "mailto:ejemplo@example.com?subject=" 
+    + encodeURIComponent(asunto) 
+    + "&body=" 
+    + encodeURIComponent(mensaje);
 });
 
 function mostrarModal(mensaje) {
-  const modal = document.getElementById("modal");
-  const texto = document.getElementById("modal-mensaje");
+  var modal = document.getElementById("modal");
+  var texto = document.getElementById("modal_mensaje");
 
   texto.textContent = mensaje;
   modal.style.display = "flex";

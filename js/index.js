@@ -50,6 +50,12 @@ var pantalla_inicio = document.getElementById("pantalla_inicio");
 var pantalla_juego = document.getElementById("pantalla_juego");
 var boton_iniciar_juego = document.getElementById("btn_iniciar_juego");
 
+var boton_historial = document.getElementById("boton_historial");
+
+boton_historial.addEventListener("click", function(e){
+  abrirHistorial();
+});
+
 function actualizar_intentos_restantes(intentos_restantes){
   var intentos = document.getElementById("intentos");
   intentos.innerText = intentos_restantes;
@@ -63,10 +69,10 @@ boton_reiniciar.addEventListener("click", function (evento){
 
 async function generar_jugador(){
   var jugador = await fetch("https://futbolle-daw-uai-2026.onrender.com/api/players/random")
-    .then(response => response.json())
+    .then(function(response){
+      return response.json();
+    })
     .then(function(data){
-      // console.log(data)
-
       input_busqueda.disabled = false;
       return data;
     })
@@ -80,7 +86,6 @@ async function generar_jugador(){
 async function iniciar(){
   jugador_random = await generar_jugador();
   input_busqueda.disabled = false;
-  // console.log(jugador_random);
 }
 
 iniciar();
@@ -101,9 +106,10 @@ input_busqueda.addEventListener("input", function(evento){
 function autocompletado(nombre){
   var jugadores =
   fetch("https://futbolle-daw-uai-2026.onrender.com/api/players/search?q="+nombre+"&limit=8")
-    .then(response => response.json())
+    .then(function(response){
+      return response.json();
+    })
     .then(function(data){
-      // console.log(data)
       lista_autocompletado.innerHTML = "";
 
       for(var i=0; i< data.length; i++){
@@ -127,6 +133,9 @@ function autocompletado(nombre){
 
 function intento_jugador(jugador){
 
+  var puntaje = 0;
+  var partida = {};
+
   iniciarCronometro();
 
   for(var i=0;i<nombres_usados.length;i++){
@@ -148,8 +157,8 @@ function intento_jugador(jugador){
   actualizar_intentos_restantes(intentos_restantes);
   if(cantidad_correctos === 6){
     victoria();
-    var puntaje = calcularPuntaje(true, intentos_totales-intentos_restantes, tiempo);
-    var partida = {
+    puntaje = calcularPuntaje(true, intentos_totales-intentos_restantes, tiempo);
+    partida = {
       usuario: nombre_usuario,
       jugador: jugador.name,
       resultado: "Ganado",
@@ -160,14 +169,13 @@ function intento_jugador(jugador){
       puntaje: puntaje
     };
     guardar_partida(partida);
-    
     return;
   }
 
   if(intentos_restantes === 0){
     derrota();
-    var puntaje = calcularPuntaje(false, intentos_totales-intentos_restantes, tiempo);
-    var partida = {
+    puntaje = calcularPuntaje(false, intentos_totales-intentos_restantes, tiempo);
+    partida = {
       usuario: nombre_usuario,
       jugador: jugador.name,
       resultado: "Perdido",

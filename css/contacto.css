@@ -48,13 +48,13 @@ body {
   color: var(--color-texto);
 }
 
-.contenedor-contacto {
+.contenedor_contacto {
   width: 100%;
   max-width: 500px;
   padding: 20px;
 }
 
-.card-contacto {
+.card_contacto {
   background-color: var(--color-card);
   padding: 30px;
   border-radius: 12px;
@@ -66,7 +66,7 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-.card-contacto h1 {
+.card_contacto h1 {
   text-align: center;
 }
 
@@ -75,7 +75,7 @@ body {
   font-size: 14px;
 }
 
-.formulario-contacto {
+.formulario_contacto {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -99,7 +99,7 @@ input:focus, textarea:focus {
   outline: 2px solid #3b82f6;
 }
 
-.boton-enviar {
+.boton_enviar {
   margin-top: 10px;
   padding: 12px;
   border: none;
@@ -112,11 +112,11 @@ input:focus, textarea:focus {
   font-weight: bold;
 }
 
-.boton-enviar:hover {
+.boton_enviar:hover {
   background-color: var(--color-boton-hover);
 }
 
-.boton-link {
+.boton_link {
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -131,7 +131,7 @@ input:focus, textarea:focus {
   transition: 0.2s;
 }
 
-.boton-link:hover {
+.boton_link:hover {
   background-color: var(--color-volver-hover);
 }
 
@@ -165,7 +165,7 @@ input:focus, textarea:focus {
   align-items: center;
 }
 
-.modal-contenido {
+.modal_contenido {
   background: white;
   color: black;
   padding: 20px;

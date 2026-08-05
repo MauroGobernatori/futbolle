@@ -50,10 +50,18 @@ JavaScript
 
 📂 Estructura  
 .  
+├── css  
+│   ├── contacto.css  
+│   ├── reset.css  
+│   └── styles.css  
+├── js  
+    ├── contacto.js  
+    └── index.js  
+├── .gitignore  
+├── contacto.html  
 ├── index.html  
-├── style.css  
-├── script.js  
-└── data.js  
+└── README.md  
+
 
 ▶️ Ejecutar el proyecto  
 Clonar el repositorio  

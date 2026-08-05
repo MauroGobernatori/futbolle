@@ -9,15 +9,15 @@
 </head>
 <body>
 
-  <main class="contenedor-contacto">
-    <section class="card-contacto">
+  <main class="contenedor_contacto">
+    <section class="card_contacto">
 
       <h1>Contacto</h1>
       <p class="descripcion">
         Si tenés alguna consulta o sugerencia, completá el formulario.
       </p>
 
-      <form class="formulario-contacto" action="mailto:ejemplo@example.com" method="post" enctype="text/plain" id="form-contacto">
+      <form class="formulario_contacto" action="mailto:ejemplo@example.com" method="post" enctype="text/plain" id="form-contacto">
         <div class="grupo">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" required>
@@ -38,10 +38,10 @@
           <textarea id="mensaje" rows="5" required></textarea>
         </div>
 
-        <button type="submit" class="boton-enviar">
+        <button type="submit" class="boton_enviar">
           Enviar mensaje
         </button>
-        <a href="index.html" class="boton-link">
+        <a href="index.html" class="boton_link">
             Volver al Inicio
         </a>
 
@@ -57,9 +57,9 @@
   </main>
 
     <div id="modal" class="modal">
-        <div class="modal-contenido">
-            <p id="modal-mensaje"></p>
-            <button onclick="cerrarModal()">Cerrar</button>
+        <div class="modal_contenido">
+            <p id="modal_mensaje"></p>
+            <button id="cerrar_modal">Cerrar</button>
         </div>
     </div>
 
