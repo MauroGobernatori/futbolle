@@ -52,6 +52,10 @@ var boton_iniciar_juego = document.getElementById("btn_iniciar_juego");
 
 var boton_historial = document.getElementById("boton_historial");
 
+var modal_error = document.getElementById("modal_error");
+var mensaje_error = document.getElementById("modal_error_mensaje");
+var boton_cerrar_modal_error = document.getElementById("btn_cerrar_modal_error");
+
 boton_historial.addEventListener("click", function(e){
     abrirHistorial();
 });
@@ -77,7 +81,11 @@ async function generar_jugador(){
             return data;
         })
         .catch(function(err){
-            console.log(err);
+            if (err.message.includes("Failed to fetch")) {
+                mostrarError("No se pudo conectar al servidor.");
+            } else {
+                mostrarError("Ocurrió un error inesperado.");
+            }
         });
 
     return jugador;
@@ -127,7 +135,11 @@ function autocompletado(nombre){
             
         })
         .catch(function(err){
-            console.log(err);
+            if (err.message.includes("Failed to fetch")) {
+                mostrarError("No se pudo conectar al servidor.");
+            } else {
+                mostrarError("Ocurrió un error inesperado.");
+            }
         });
 }
 
@@ -464,7 +476,7 @@ boton_iniciar_juego.addEventListener("click", function(){
 });
 
 function iniciarJuego() {
-    if (input_nombre.value === "" || select_dificultad.value === "") {
+    if (input_nombre.value === "" || select_dificultad.value === "" || input_nombre.value.length < 3) {
         return;
     }
 
@@ -501,3 +513,12 @@ function calcularPuntaje(ganado, intentos, tiempoSegundos) {
 
     return puntaje;
 }
+
+function mostrarError(msg) {
+    mensaje_error.textContent = msg;
+    modal_error.classList.remove("modal_oculto");
+}
+
+boton_cerrar_modal_error.addEventListener("click", function() {
+    modal_error.classList.add("modal_oculto");
+});

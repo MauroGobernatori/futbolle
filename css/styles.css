@@ -268,11 +268,11 @@ button {
     color: #ffd1d1;
 }
 
-#modal_perdiste.modal_oculto, #modal_victoria.modal_oculto, #modal_historial.modal_oculto{
+#modal_perdiste.modal_oculto, #modal_victoria.modal_oculto, #modal_historial.modal_oculto, #modal_error.modal_oculto{
   display: none;
 }
 
-#modal_perdiste, #modal_victoria, #modal_historial {
+#modal_perdiste, #modal_victoria, #modal_historial, #modal_error {
     position: fixed;
     top: 0;
     left: 0;
@@ -317,7 +317,7 @@ button {
     font-size: 14px;
 }
 
-#btn_cerrar_modal_derrota, #btn_cerrar_modal_victoria {
+#btn_cerrar_modal_derrota, #btn_cerrar_modal_victoria, #btn_cerrar_modal_error {
     background: #3b82f6;
     border: none;
     padding: 10px 20px;
@@ -326,7 +326,7 @@ button {
     cursor: pointer;
 }
 
-#btn_cerrar_modal_derrota:hover, #btn_cerrar_modal_victoria:hover {
+#btn_cerrar_modal_derrota:hover, #btn_cerrar_modal_victoria:hover, #btn_cerrar_modal_error:hover {
     background: #2563eb;
 }
 
